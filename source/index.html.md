@@ -38,7 +38,7 @@ const options = {
   scope: ["identity"],
   redirectUri: "insert redirectUri",
   permanant: true,
-  state: "h5t1jcb",
+  state: "randomString",
 };
 
 snoowrap.getAuthUrl(options);
@@ -48,7 +48,7 @@ snoowrap.getAuthUrl(options);
 
 Generates the authorization URL based on your Reddit API key. When redirected to this URL, the user can give authorization for you app to access the Reddit API on their behalf.
 
-### Parameters
+### Query Parameters
 
 | Parameter | Type   | Description                                                                            |
 | --------- | ------ | -------------------------------------------------------------------------------------- |
@@ -68,3 +68,43 @@ Generates the authorization URL based on your Reddit API key. When redirected to
 ### Returns:
 
 A URL where the user can authenticate with the given options.
+
+## Authorization Code Exchange
+
+> Exchanges the authorization code with an access token and refresh token.
+
+```javascript
+const snoowrap = require("snoowrap");
+
+const options = {
+  code: code,
+  userAgent: "TreasureOrbital v1.0",
+  clientId: "insert client ID",
+  clientSecret: "insert client secret",
+  redirectUri: "insert redirect url",
+};
+
+snoowrap.fromAuthCode(options).getMe().then(console.log);
+```
+
+Exchanges the authorization code from the authorization url with an access token and a refresh token.
+
+### Query Parameters
+
+| Parameter | Type   | Description                                                                                                                     |
+| --------- | ------ | ------------------------------------------------------------------------------------------------------------------------------- |
+| options   | object | The options that is required for the authentification server to generate the access token and refresh token for the application |
+
+### Options Parameters
+
+| Name         | Type   | Argument  | Description                                                    |
+| ------------ | ------ | --------- | -------------------------------------------------------------- |
+| code         | string | mandatory | The authorization code                                         |
+| userAgent    | string | mandatory | A unique string describing what the application does           |
+| clientId     | string | mandatory | clientId given when generating the Reddit API key              |
+| clientSecret | string | mandatory | The client secret of the application provided by Reddit        |
+| redirect Uri | string | mandatory | Redirect URL that was given when generating the Reddir API key |
+| endpointDomain | string          | optional  | Endpoint domain of the url. Not require if authenticating on reddit.com                                                  
+
+### Returns:
+A promise that fulfils with a snoowrap instance. 
