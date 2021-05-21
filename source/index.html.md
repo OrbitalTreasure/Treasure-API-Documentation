@@ -2,9 +2,6 @@
 title: API Reference
 
 language_tabs: # must be one of https://git.io/vQNgJ
-  - shell
-  - ruby
-  - python
   - javascript
 
 toc_footers:
@@ -21,221 +18,53 @@ code_clipboard: true
 
 # Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+Welcome to the API documentation for Treasure Orbital. In this document, we document the internal and external APIs that we use in our project. We use these APIs to access different third party applications that we use in our project.
 
-We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+We access these third party APIs using JavaScript.
 
-This example API documentation page was created with [Slate](https://github.com/slatedocs/slate). Feel free to edit it and use it as a base for your own API's documentation.
+# Snoowrap API
 
-# Authentication
+Snoowrap is a library that wraps around the Reddit API and allow us to interact with the Reddit API with JavaScript methods.
 
-> To authorize, use this code:
+## Get Authorization URL
 
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-```
-
-```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here" \
-  -H "Authorization: meowmeowmeow"
-```
+> Obtains the authorization URL
 
 ```javascript
-const kittn = require('kittn');
+const snoowrap = require("snoowrap");
 
-let api = kittn.authorize('meowmeowmeow');
+const options = {
+  clientId: "insert client ID",
+  scope: ["identity"],
+  redirectUri: "insert redirectUri",
+  permanant: true,
+  state: "h5t1jcb",
+};
+
+snoowrap.getAuthUrl(options);
 ```
 
-> Make sure to replace `meowmeowmeow` with your API key.
+> Ensure that the <code>redirectUri</code> is the same as the redirectUri declared when getting the Reddit API
 
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
+Generates the authorization URL based on your Reddit API key. When redirected to this URL, the user can give authorization for you app to access the Reddit API on their behalf.
 
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
+### Parameters
 
-`Authorization: meowmeowmeow`
+| Parameter | Type   | Description                                                                            |
+| --------- | ------ | -------------------------------------------------------------------------------------- |
+| options   | object | The options that is required for the authentification server to generate the right URL |
 
-<aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
-</aside>
+### options Parameters
 
-# Kittens
+| Name           | Type            | Argument  | Description                                                                                                                                                                                                |
+| -------------- | --------------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| clientId       | string          | mandatory | clientId given when generating the Reddit API key                                                                                                                                                          |
+| scope          | Array\<String\> | mandatory | Scope of the permissions needed by the application. All scopes can be found [here](https://www.reddit.com/api/v1/scopes)                                                                                   |
+| redirect Uri   | string          | mandatory | Redirect URL that was given when generating the Reddir API key                                                                                                                                             |
+| permanent      | boolean         | optional  | If true, the app will have indefinite access to the user's account. If false, access to the user's account will expire after 1 hour.                                                                       |
+| state          | string          | optional  | A string that can be used to reserve the state of the application. It is also important in preventing CSRF attacks. More infomation can be found [here](https://auth0.com/docs/protocols/state-parameters) |
+| endpointDomain | string          | optional  | Endpoint domain of the url. Not require if authenticating on reddit.com                                                                                                                                    |
 
-## Get All Kittens
+### Returns:
 
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
-
-```shell
-curl "http://example.com/api/kittens" \
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
-```
-
-> The above command returns JSON structured like this:
-
-```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
-```
-
-This endpoint retrieves all kittens.
-
-### HTTP Request
-
-`GET http://example.com/api/kittens`
-
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
-
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-
-## Get a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2" \
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
-}
-```
-
-This endpoint retrieves a specific kitten.
-
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
-
-### HTTP Request
-
-`GET http://example.com/kittens/<ID>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
-
-## Delete a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2" \
-  -X DELETE \
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.delete(2);
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "id": 2,
-  "deleted" : ":("
-}
-```
-
-This endpoint deletes a specific kitten.
-
-### HTTP Request
-
-`DELETE http://example.com/kittens/<ID>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to delete
-
+A URL where the user can authenticate with the given options.
