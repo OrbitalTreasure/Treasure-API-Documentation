@@ -299,7 +299,7 @@
       </span>
     </a>
     <div class="toc-wrapper">
-      <img src="images/logo-1e815a84.png" class="logo" alt="" />
+      <img src="images/logo-2e2ee3c3.png" class="logo" alt="" />
         <div class="lang-selector">
               <a href="#" data-language-name="javascript">javascript</a>
         </div>
@@ -316,6 +316,9 @@
               <ul class="toc-list-h2">
                   <li>
                     <a href="#get-authorization-url" class="toc-h2 toc-link" data-title="Get Authorization URL">Get Authorization URL</a>
+                  </li>
+                  <li>
+                    <a href="#authorization-code-exchange" class="toc-h2 toc-link" data-title="Authorization Code Exchange">Authorization Code Exchange</a>
                   </li>
               </ul>
           </li>
@@ -348,7 +351,7 @@
   <span class="na">scope</span><span class="p">:</span> <span class="p">[</span><span class="dl">"</span><span class="s2">identity</span><span class="dl">"</span><span class="p">],</span>
   <span class="na">redirectUri</span><span class="p">:</span> <span class="dl">"</span><span class="s2">insert redirectUri</span><span class="dl">"</span><span class="p">,</span>
   <span class="na">permanant</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
-  <span class="na">state</span><span class="p">:</span> <span class="dl">"</span><span class="s2">h5t1jcb</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">state</span><span class="p">:</span> <span class="dl">"</span><span class="s2">randomString</span><span class="dl">"</span><span class="p">,</span>
 <span class="p">};</span>
 
 <span class="nx">snoowrap</span><span class="p">.</span><span class="nx">getAuthUrl</span><span class="p">(</span><span class="nx">options</span><span class="p">);</span>
@@ -358,7 +361,7 @@
 </blockquote>
 
 <p>Generates the authorization URL based on your Reddit API key. When redirected to this URL, the user can give authorization for you app to access the Reddit API on their behalf.</p>
-<h3 id='parameters'>Parameters</h3>
+<h3 id='query-parameters'>Query Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -420,6 +423,85 @@
 </tbody></table>
 <h3 id='returns'>Returns:</h3>
 <p>A URL where the user can authenticate with the given options.</p>
+<h2 id='authorization-code-exchange'>Authorization Code Exchange</h2>
+<blockquote>
+<p>Exchanges the authorization code with an access token and refresh token.</p>
+</blockquote>
+<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">snoowrap</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">snoowrap</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">code</span><span class="p">:</span> <span class="nx">code</span><span class="p">,</span>
+  <span class="na">userAgent</span><span class="p">:</span> <span class="dl">"</span><span class="s2">TreasureOrbital v1.0</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">clientId</span><span class="p">:</span> <span class="dl">"</span><span class="s2">insert client ID</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">clientSecret</span><span class="p">:</span> <span class="dl">"</span><span class="s2">insert client secret</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">redirectUri</span><span class="p">:</span> <span class="dl">"</span><span class="s2">insert redirect url</span><span class="dl">"</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="nx">snoowrap</span><span class="p">.</span><span class="nx">fromAuthCode</span><span class="p">(</span><span class="nx">options</span><span class="p">).</span><span class="nx">getMe</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">);</span>
+</code></pre></div>
+<p>Exchanges the authorization code from the authorization url with an access token and a refresh token.</p>
+<h3 id='query-parameters-2'>Query Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>options</td>
+<td>object</td>
+<td>The options that is required for the authentification server to generate the access token and refresh token for the application</td>
+</tr>
+</tbody></table>
+<h3 id='options-parameters-2'>Options Parameters</h3>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Argument</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>code</td>
+<td>string</td>
+<td>mandatory</td>
+<td>The authorization code</td>
+</tr>
+<tr>
+<td>userAgent</td>
+<td>string</td>
+<td>mandatory</td>
+<td>A unique string describing what the application does</td>
+</tr>
+<tr>
+<td>clientId</td>
+<td>string</td>
+<td>mandatory</td>
+<td>clientId given when generating the Reddit API key</td>
+</tr>
+<tr>
+<td>clientSecret</td>
+<td>string</td>
+<td>mandatory</td>
+<td>The client secret of the application provided by Reddit</td>
+</tr>
+<tr>
+<td>redirect Uri</td>
+<td>string</td>
+<td>mandatory</td>
+<td>Redirect URL that was given when generating the Reddir API key</td>
+</tr>
+<tr>
+<td>endpointDomain</td>
+<td>string</td>
+<td>optional</td>
+<td>Endpoint domain of the url. Not require if authenticating on reddit.com</td>
+</tr>
+</tbody></table>
+<h3 id='returns-2'>Returns:</h3>
+<p>A promise that fulfils with a snoowrap instance. </p>
 <h1 id='errors'>Errors</h1>
 <aside class="notice">
 This error section is stored in a separate file in <code>includes/_errors.md</code>. Slate allows you to optionally separate out your docs into many files...just save them to the <code>includes</code> folder and add them to the top of your <code>index.md</code>'s frontmatter. Files are included in the order listed.
