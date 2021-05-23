@@ -320,16 +320,26 @@
                   <li>
                     <a href="#authorization-code-exchange" class="toc-h2 toc-link" data-title="Authorization Code Exchange">Authorization Code Exchange</a>
                   </li>
+                  <li>
+                    <a href="#getting-the-user" class="toc-h2 toc-link" data-title="Getting the User">Getting the User</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#metamask-api" class="toc-h1 toc-link" data-title="MetaMask API">MetaMask API</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#getting-wallet-id" class="toc-h2 toc-link" data-title="Getting Wallet ID">Getting Wallet ID</a>
+                  </li>
+                  <li>
+                    <a href="#getting-the-balance-amount" class="toc-h2 toc-link" data-title="Getting the Balance Amount">Getting the Balance Amount</a>
+                  </li>
               </ul>
           </li>
           <li>
             <a href="#errors" class="toc-h1 toc-link" data-title="Errors">Errors</a>
           </li>
       </ul>
-        <ul class="toc-footer">
-            <li><a href='#'>Sign Up for a Developer Key</a></li>
-            <li><a href='https://github.com/slatedocs/slate'>Documentation Powered by Slate</a></li>
-        </ul>
     </div>
     <div class="page-wrapper">
       <div class="dark-box"></div>
@@ -347,11 +357,11 @@
 <div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">snoowrap</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">snoowrap</span><span class="dl">"</span><span class="p">);</span>
 
 <span class="kd">const</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="na">clientId</span><span class="p">:</span> <span class="dl">"</span><span class="s2">insert client ID</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">clientId</span><span class="p">:</span> <span class="dl">"</span><span class="s2">DzfZOF3d3708Yy</span><span class="dl">"</span><span class="p">,</span>
   <span class="na">scope</span><span class="p">:</span> <span class="p">[</span><span class="dl">"</span><span class="s2">identity</span><span class="dl">"</span><span class="p">],</span>
-  <span class="na">redirectUri</span><span class="p">:</span> <span class="dl">"</span><span class="s2">insert redirectUri</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">redirectUri</span><span class="p">:</span> <span class="dl">"</span><span class="s2">http://localhost:3000/auth-callback</span><span class="dl">"</span><span class="p">,</span>
   <span class="na">permanant</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
-  <span class="na">state</span><span class="p">:</span> <span class="dl">"</span><span class="s2">randomString</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">state</span><span class="p">:</span> <span class="dl">"</span><span class="s2">hywioqj</span><span class="dl">"</span><span class="p">,</span>
 <span class="p">};</span>
 
 <span class="nx">snoowrap</span><span class="p">.</span><span class="nx">getAuthUrl</span><span class="p">(</span><span class="nx">options</span><span class="p">);</span>
@@ -432,12 +442,12 @@
 <span class="kd">const</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
   <span class="na">code</span><span class="p">:</span> <span class="nx">code</span><span class="p">,</span>
   <span class="na">userAgent</span><span class="p">:</span> <span class="dl">"</span><span class="s2">TreasureOrbital v1.0</span><span class="dl">"</span><span class="p">,</span>
-  <span class="na">clientId</span><span class="p">:</span> <span class="dl">"</span><span class="s2">insert client ID</span><span class="dl">"</span><span class="p">,</span>
-  <span class="na">clientSecret</span><span class="p">:</span> <span class="dl">"</span><span class="s2">insert client secret</span><span class="dl">"</span><span class="p">,</span>
-  <span class="na">redirectUri</span><span class="p">:</span> <span class="dl">"</span><span class="s2">insert redirect url</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">clientId</span><span class="p">:</span> <span class="dl">"</span><span class="s2">DzfZOF3d3708Yy</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">clientSecret</span><span class="p">:</span> <span class="dl">"</span><span class="s2">sBfggKGPAq5b7IbZoYXrKmKPqoEdoU</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">redirectUri</span><span class="p">:</span> <span class="dl">"</span><span class="s2">http://localhost:3000/auth-callback</span><span class="dl">"</span><span class="p">,</span>
 <span class="p">};</span>
 
-<span class="nx">snoowrap</span><span class="p">.</span><span class="nx">fromAuthCode</span><span class="p">(</span><span class="nx">options</span><span class="p">).</span><span class="nx">getMe</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">);</span>
+<span class="nx">snoowrap</span><span class="p">.</span><span class="nx">fromAuthCode</span><span class="p">(</span><span class="nx">options</span><span class="p">).</span><span class="nx">then</span><span class="p">((</span><span class="nx">r</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">r</span><span class="p">.</span><span class="nx">getMe</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">));</span>
 </code></pre></div>
 <p>Exchanges the authorization code from the authorization url with an access token and a refresh token.</p>
 <h3 id='query-parameters-2'>Query Parameters</h3>
@@ -501,7 +511,73 @@
 </tr>
 </tbody></table>
 <h3 id='returns-2'>Returns:</h3>
-<p>A promise that fulfils with a snoowrap instance. </p>
+<p>A promise that fulfils with a snoowrap instance.</p>
+<h2 id='getting-the-user'>Getting the User</h2>
+<blockquote>
+<p>Gets the user details</p>
+</blockquote>
+<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="nx">r</span><span class="p">.</span><span class="nx">getMe</span><span class="p">().</span><span class="nx">then</span><span class="p">((</span><span class="nx">data</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">));</span>
+</code></pre></div>
+<p>Gets the information on the requester&#39;s own user profile.</p>
+<h3 id='returns-3'>Returns:</h3>
+<p>A RedditUser object corresponding to the requester&#39;s profile.</p>
+<h1 id='metamask-api'>MetaMask API</h1>
+<p>Metamask is a digital wallet for ethereum and it adds on to your desktop’s browser as an extension. We use the Metamask API to interact with the user&#39;s cryptowallet.</p>
+<h2 id='getting-wallet-id'>Getting Wallet ID</h2>
+<blockquote>
+<p>Retrieves Wallet ID</p>
+</blockquote>
+<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="nx">ethereum</span>
+  <span class="p">.</span><span class="nx">request</span><span class="p">({</span> <span class="na">method</span><span class="p">:</span> <span class="dl">"</span><span class="s2">eth_requestAccounts</span><span class="dl">"</span> <span class="p">})</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">)</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">);</span>
+</code></pre></div>
+<p>Requests that the user provides an Ethereum address to be identified by. Returns a Promise that resolves to an array of a single Ethereum address string. If the user denies the request, the Promise will reject with a 4001 error.</p>
+
+<p>The request causes a MetaMask popup to appear. You should only request the user&#39;s accounts in response to user action, such as a button click. You should always disable the button that caused the request to be dispatched, while the request is still pending.</p>
+<h2 id='getting-the-balance-amount'>Getting the Balance Amount</h2>
+<blockquote>
+<p>Getting the Balance Amount</p>
+</blockquote>
+<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="nx">ethereum</span><span class="p">.</span><span class="nx">request</span><span class="p">({</span>
+  <span class="na">method</span><span class="p">:</span> <span class="nx">eth_getBalance</span><span class="p">,</span>
+  <span class="na">params</span><span class="p">:</span> <span class="p">[</span><span class="dl">"</span><span class="s2">0xBAECA86200e7AC866B397E3A00A4De0Ecf3f4100</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">0x0</span><span class="dl">"</span><span class="p">],</span>
+<span class="p">});</span>
+</code></pre></div>
+<blockquote>
+<p>The above command returns a promise with the following JSON structured like this:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"jsonrpc"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.0"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"result"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x0"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p>Gets the balance amount of the Metamask wallet associated with the window. Uses the Ethereum RPC API method <code>eth_getBalance</code>. Takes in a <code>params</code> argument as a list.</p>
+<h3 id='params-parameters'>params Parameters</h3>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Argument</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>address</td>
+<td>string</td>
+<td>mandatory</td>
+<td>Wallet address</td>
+</tr>
+<tr>
+<td>blockNumber</td>
+<td>string</td>
+<td>optional</td>
+<td>block number to check</td>
+</tr>
+</tbody></table>
+<h3 id='returns-4'>Returns:</h3>
+<p>A promise with the requested data.</p>
 <h1 id='errors'>Errors</h1>
 <aside class="notice">
 This error section is stored in a separate file in <code>includes/_errors.md</code>. Slate allows you to optionally separate out your docs into many files...just save them to the <code>includes</code> folder and add them to the top of your <code>index.md</code>'s frontmatter. Files are included in the order listed.
