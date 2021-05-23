@@ -5,8 +5,6 @@ language_tabs: # must be one of https://git.io/vQNgJ
   - javascript
 
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
-  - <a href='https://github.com/slatedocs/slate'>Documentation Powered by Slate</a>
 
 includes:
   - errors
@@ -34,11 +32,11 @@ Snoowrap is a library that wraps around the Reddit API and allow us to interact 
 const snoowrap = require("snoowrap");
 
 const options = {
-  clientId: "insert client ID",
+  clientId: "DzfZOF3d3708Yy",
   scope: ["identity"],
-  redirectUri: "insert redirectUri",
+  redirectUri: "http://localhost:3000/auth-callback",
   permanant: true,
-  state: "randomString",
+  state: "hywioqj",
 };
 
 snoowrap.getAuthUrl(options);
@@ -79,12 +77,12 @@ const snoowrap = require("snoowrap");
 const options = {
   code: code,
   userAgent: "TreasureOrbital v1.0",
-  clientId: "insert client ID",
-  clientSecret: "insert client secret",
-  redirectUri: "insert redirect url",
+  clientId: "DzfZOF3d3708Yy",
+  clientSecret: "sBfggKGPAq5b7IbZoYXrKmKPqoEdoU",
+  redirectUri: "http://localhost:3000/auth-callback",
 };
 
-snoowrap.fromAuthCode(options).getMe().then(console.log);
+snoowrap.fromAuthCode(options).then((r) => r.getMe().then(console.log));
 ```
 
 Exchanges the authorization code from the authorization url with an access token and a refresh token.
@@ -97,14 +95,81 @@ Exchanges the authorization code from the authorization url with an access token
 
 ### Options Parameters
 
-| Name         | Type   | Argument  | Description                                                    |
-| ------------ | ------ | --------- | -------------------------------------------------------------- |
-| code         | string | mandatory | The authorization code                                         |
-| userAgent    | string | mandatory | A unique string describing what the application does           |
-| clientId     | string | mandatory | clientId given when generating the Reddit API key              |
-| clientSecret | string | mandatory | The client secret of the application provided by Reddit        |
-| redirect Uri | string | mandatory | Redirect URL that was given when generating the Reddir API key |
-| endpointDomain | string          | optional  | Endpoint domain of the url. Not require if authenticating on reddit.com                                                  
+| Name           | Type   | Argument  | Description                                                             |
+| -------------- | ------ | --------- | ----------------------------------------------------------------------- |
+| code           | string | mandatory | The authorization code                                                  |
+| userAgent      | string | mandatory | A unique string describing what the application does                    |
+| clientId       | string | mandatory | clientId given when generating the Reddit API key                       |
+| clientSecret   | string | mandatory | The client secret of the application provided by Reddit                 |
+| redirect Uri   | string | mandatory | Redirect URL that was given when generating the Reddir API key          |
+| endpointDomain | string | optional  | Endpoint domain of the url. Not require if authenticating on reddit.com |
 
 ### Returns:
-A promise that fulfils with a snoowrap instance. 
+
+A promise that fulfils with a snoowrap instance.
+
+## Getting the User
+
+> Gets the user details
+
+```javascript
+r.getMe().then((data) => console.log(data));
+```
+
+Gets the information on the requester's own user profile.
+
+### Returns:
+
+A RedditUser object corresponding to the requester's profile.
+
+# MetaMask API
+
+Metamask is a digital wallet for ethereum and it adds on to your desktop’s browser as an extension. We use the Metamask API to interact with the user's cryptowallet.
+
+## Getting Wallet ID
+
+> Retrieves Wallet ID
+
+```javascript
+ethereum
+  .request({ method: "eth_requestAccounts" })
+  .then(console.log)
+  .catch(console.log);
+```
+
+Requests that the user provides an Ethereum address to be identified by. Returns a Promise that resolves to an array of a single Ethereum address string. If the user denies the request, the Promise will reject with a 4001 error.
+
+The request causes a MetaMask popup to appear. You should only request the user's accounts in response to user action, such as a button click. You should always disable the button that caused the request to be dispatched, while the request is still pending.
+
+## Getting the Balance Amount
+
+> Getting the Balance Amount
+
+```javascript
+ethereum.request({
+  method: eth_getBalance,
+  params: ["0xBAECA86200e7AC866B397E3A00A4De0Ecf3f4100", "0x0"],
+});
+```
+
+> The above command returns a promise with the following JSON structured like this:
+
+```json
+{
+  "jsonrpc": "2.0",
+  "result": "0x0",
+  "id": 0
+}
+```
+
+Gets the balance amount of the Metamask wallet associated with the window. Uses the Ethereum RPC API method <code>eth_getBalance</code>. Takes in a <code>params</code> argument as a list.
+
+### params Parameters
+
+| Name        | Type   | Argument  | Description           |
+| ----------- | ------ | --------- | --------------------- |
+| address     | string | mandatory | Wallet address        |
+| blockNumber | string | optional  | block number to check |
+
+### Returns:
+A promise with the requested data.
